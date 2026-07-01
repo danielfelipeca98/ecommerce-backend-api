@@ -2,30 +2,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const socket = io();
 
 
-    socket.on('update-products', (products) => {
-        const productList = document.getElementById('productList');
+    socket.on('update-products', (data) => {
+        console.log('📦 DATA completa recibida:', data);
+        const products = data || [];
+        console.log('🟢 Productos extraídos:', products);
+        const listContainer = document.getElementById('product-List');
+        console.log('Contenedor:', listContainer);
 
-        if (products.length === 0) {
-            productList.innerHTML = '<p>No hay productos disponibles.</p>';
-            return;
-        }
-
-        let html = '<ul>';
-        products.forEach(p => {
-            html += `
+        if (listContainer) {
+            listContainer.innerHTML = products.map(p => `
             <li>
-                <span style="font-size:0.8em; color:gray;">ID: ${p.id}</span>
+                <span style="font-size:0.8em; color:gray;">ID: ${p._id}</span><br>
                 <strong>${p.title}</strong> - $${p.price}
-                (${p.category}) - Stock: ${p.stock} - Código: ${p.code}
-   
-    
+                (${p.category}) Stock: ${p.stock} Código: ${p.code}
+                
             </li>
-        `;
-        });
-        html += '</ul>';
-
-        productList.innerHTML = html;
+            `).join('');
+            console.log('Lista actualizada con', products.length, 'productos');
+        } else {
+            console.warn('Contenedor no encontrado');
+        }
     });
+
 
     document.getElementById('productForm').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -51,12 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('deleteForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        const id = parseInt(document.getElementById('deleteId').value)
-        if (id > 0) {
+        const id = document.getElementById('deleteId').value.trim();
+        console.log(' Enviando ID a eliminar:', id);///////////////////////////
+        if (id) {
             socket.emit('delete-product', id)
         } else { alert('Id invalido') }
         e.target.reset();
     })
 })
+
+window.deleteProduct = function (id) {
+    socket.emit('delete-product', id);
+};
 
 

@@ -1,0 +1,29 @@
+<h1><strong>Carrito de compras</strong></h1>
+
+{{#if cart.products.length}}
+    <ul>
+        {{#each cart.products}}
+            {{#if this.product}}
+                <li>
+                    <h1><strong>{{this.product.title}}</strong></h1>
+                    <h3>
+                        ${{this.product.price}} × 
+                        <span class="cantidad" data-pid="{{this.product._id}}">{{this.quantity}}</span> UND = 
+                        <span class="subtotal" data-pid="{{this.product._id}}" data-precio="{{this.product.price}}">{{this.subtotal}}</span>
+                    </h3>
+                    <button class="btn-more" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">+</button>
+                    <button class="btn-less" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">-</button>
+                </li>
+            {{else}}
+                <li>Producto eliminado (referencia huérfana)</li>
+            {{/if}}
+        {{/each}}
+    </ul>
+    <h3>Total: <span id="total-carrito">{{total}}</span></h3>
+    <button id="btnPay" data-cid="{{cart._id}}">Vaciar carrito</button>
+{{else}}
+    <p>El carrito está vacío.</p>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/cartDetail.js"></script>

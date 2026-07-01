@@ -5,9 +5,30 @@
         <li>
             <strong>{{this.title}}</strong> - ${{this.price}}
             ({{this.category}}) Stock: {{this.stock}} Código: {{this.code}}
+            <a href="/products/{{this._id}}">Ver detalle</a>
+            <button class="btn-dec" data-pid="{{this._id}}">-</button>
+            <span class="cantidad" data-pid="{{this._id}}">1</span>
+            <button class="btn-inc" data-pid="{{this._id}}">+</button>
+            <button class="btn-add-cart" data-pid="{{this._id}}">Agregar al carrito</button>
         </li>
         {{else}}
         <li>No hay productos disponibles.</li>
         {{/each}}
     </ul>
+    <div>
+        {{#if pagination.hasPrevPage}}
+        <a href="?page={{pagination.prevPage}}&limit={{currentLimit}}&sort={{currentSort}}&query={{currentQuery}}">←
+            Anterior</a>
+        {{/if}}
+
+        <span>Página {{pagination.page}} de {{pagination.totalPages}}</span>
+
+        {{#if pagination.hasNextPage}}
+        <a href="?page={{pagination.nextPage}}&limit={{currentLimit}}&sort={{currentSort}}&query={{currentQuery}}">Siguiente
+            →</a>
+        {{/if}}
+    </div>
+
 </div>
+
+<script src="/js/home.js"></script>

@@ -1,9 +1,29 @@
-const express = require('express');
-const handlebars = require('express-handlebars');
+import express from 'express'
+import handlebars from 'express-handlebars'
+import { Server } from 'socket.io'
+import http from 'http'
+import dotenv from 'dotenv'
+
+import { connectDB } from './config/database.js'
+
+import productsRouter from './routes/products.router.js'
+import cartsRouter from './routes/carts.router.js'
+import viewsRouter from './routes/views.router.js'
+import ProductManager from './managers/ProductManager.js'
+
+dotenv.config()
+
 const app = express();
 const PORT = 8080;
 
-app.engine('handlebars', handlebars.engine({ defaultLayout: 'main'}));
+app.engine('handlebars', handlebars.engine({
+    defaultLayout: 'main',
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true
+    }
+}));
+
 app.set('views', './views');
 app.set('view engine', 'handlebars');
 
@@ -11,20 +31,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const productsRouter = require('./routes/products.router.js');
-const cartsRouter = require('./routes/carts.router.js');
-const viewsRouter = require('./routes/views.router.js');
-
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
 
-const { Server } = require('socket.io')
-const http = require('http')
+
 const server = http.createServer(app);
 const io = new Server(server);
-
-const ProductManager = require('./managers/ProductManager.js')
 const productManager = new ProductManager();
 
 io.on('connection', socket => {
@@ -33,11 +46,14 @@ io.on('connection', socket => {
     socket.on('new-product', async data => {
         try {
             await productManager.addProduct(data)
+            const result = await productManager.getProducts();
+            console.log('📦 result.payload tiene', result.payload.length, 'productos');
 
-            const products = await productManager.getProducts();
+            console.log('📤 Emitiendo update-products con payload:', result.payload);
+            console.log('📤 Tipo de payload:', Array.isArray(result.payload));
+            console.log('📤 Longitud de payload:', result.payload.length);
 
-            io.emit('update-products', products);
-
+            io.emit('update-products', result.payload);
             console.log('producto agregado correctamente');
         } catch (error) {
             console.error('Error al agregar producto:', error);
@@ -45,13 +61,17 @@ io.on('connection', socket => {
     })
 
     socket.on('delete-product', async id => {
+        console.log('🆔 ID recibido para eliminar:', id);
         try {
-            await productManager.deleteProduct(id)
+            const deleted = await productManager.deleteProduct(id)
+            console.log('✅ Producto eliminado:', deleted);
 
-            const products = await productManager.getProducts()
-            io.emit('update-products', products);
+            const result = await productManager.getProducts()
+            console.log('📊 Después de eliminar, productos en DB:', result.payload.length);
 
+            io.emit('update-products', result.payload);
             console.log('producto eliminado correctamente');
+
         } catch (error) {
             console.error('Error al agregar producto:', error);
 
@@ -63,6 +83,12 @@ io.on('connection', socket => {
     })
 })
 
- server.listen(PORT, () => {
-    console.log(`servidor en http://localhost:${PORT}`);
-});
+try {
+    await connectDB();
+    server.listen(PORT, () => {
+        console.log(`Servidor en http://localhost:${PORT}`);
+    });
+} catch (error) {
+    console.error('Error al conectar a MongoDB:', error.message);
+    process.exit(1);
+}

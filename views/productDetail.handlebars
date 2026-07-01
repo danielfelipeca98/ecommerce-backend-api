@@ -1,0 +1,13 @@
+<h1>{{title}}</h1>
+<h3>{{description}}</h3>
+<p><strong>${{price}}</strong></p>
+<div>
+    <button id="btnDec">-</button>
+    <span id="cantidadDisplay">1</span>
+    <button id="btnInc">+</button>
+</div>
+
+<button id="btnAddProduct" data-id={{_id}}>Agregar al carrito</button>
+
+<script src="/js/productDetail.js"></script>
+<script src="/socket.io/socket.io.js"></script>
