@@ -3,7 +3,7 @@ import Product from "../models/products.model.js";
 class ProductManager {
 
     async getProducts(limit = 10, page = 1, sort = null, query = null) {
-        console.log('📊 getProducts llamado con:', { limit, page, sort, query });
+        console.log('getProducts llamado con:', { limit, page, sort, query });
         try {
 
             let filter = {};
@@ -21,14 +21,14 @@ class ProductManager {
                 sortOption = { price: -1 };
             }
 
-            const skip = (page - 1) * limit;
+            const skip = limit === 0 ? 0 : (page - 1) * limit;
 
             const total = await Product.countDocuments(filter);
 
             const products = await Product.find(filter)
                 .sort(sortOption)
                 .skip(skip)
-                .limit(parseInt(limit));
+                .limit(limit === 0 ? null : parseInt(limit));
             console.log('🔍 Productos encontrados en DB:', products.length);
 
 

@@ -46,13 +46,7 @@ io.on('connection', socket => {
     socket.on('new-product', async data => {
         try {
             await productManager.addProduct(data)
-            const result = await productManager.getProducts();
-            console.log('📦 result.payload tiene', result.payload.length, 'productos');
-
-            console.log('📤 Emitiendo update-products con payload:', result.payload);
-            console.log('📤 Tipo de payload:', Array.isArray(result.payload));
-            console.log('📤 Longitud de payload:', result.payload.length);
-
+            const result = await productManager.getProducts(0);
             io.emit('update-products', result.payload);
             console.log('producto agregado correctamente');
         } catch (error) {
@@ -61,13 +55,13 @@ io.on('connection', socket => {
     })
 
     socket.on('delete-product', async id => {
-        console.log('🆔 ID recibido para eliminar:', id);
+        console.log('ID recibido para eliminar:', id);
         try {
             const deleted = await productManager.deleteProduct(id)
-            console.log('✅ Producto eliminado:', deleted);
+            console.log('Producto eliminado:', deleted);
 
-            const result = await productManager.getProducts()
-            console.log('📊 Después de eliminar, productos en DB:', result.payload.length);
+            const result = await productManager.getProducts(0)
+            console.log('Después de eliminar, productos en DB:', result.payload.length);
 
             io.emit('update-products', result.payload);
             console.log('producto eliminado correctamente');

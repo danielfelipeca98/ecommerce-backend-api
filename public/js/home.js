@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (respuesta.ok) {
-                    alert(`${cantidad} unidad(es) agregada(s) al carrito`);
-                    window.location.href = `/carts/${cid}`; 
+                    mostrarMensaje(`${cantidad} unidad(es) agregada(s) al carrito`, 'exito');
+                    window.location.href = `/carts/${cid}`;
                 } else {
                     const error = await respuesta.json();
-                    alert(`Error: ${error.error || 'No se pudo agregar'}`);
+                    mostrarMensaje(`Error: ${error.error || 'No se pudo agregar'}`, 'error');
                 }
             } catch (error) {
                 alert('Error de conexión con el servidor');

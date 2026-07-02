@@ -92,11 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (respuesta.ok) {
-                alert('Producto agregado al carrito');
+                mostrarMensaje(`${cantidad} unidad(es) agregada(s) al carrito`, 'exito');
                 window.location.href = `/carts/${cid}`;
             } else {
                 const error = await respuesta.json();
-                alert(`Error: ${error.error || 'No se pudo agregar'}`);
+                mostrarMensaje('Error: ID del producto no encontrado', 'error');
             }
         } catch (error) {
             alert('Error de conexión con el servidor');

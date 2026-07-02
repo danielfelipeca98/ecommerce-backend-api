@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="socket.io/socket.io.js"></script> 
     <title>{{title}}</title>
 </head>
@@ -13,7 +14,10 @@
         <a href="/realtimeproducts">Productos</a>
         <a href="#" id="verCarrito">Ver Carrito</a>
     </header>
-    <main>{{{body}}}</main>
+    <main>
+        <div id="mensajes-flotantes"></div>
+        {{{body}}}
+        </main>
     <footer>
         REcuerda la infirmacion de relleno
     </footer>
@@ -21,4 +25,7 @@
 </html>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/mainHandlebars.js"></script>
+<script src="/js/mensajes.js"></script>      
+<script src="/js/mainHandlebars.js"></script> 
+<script src="/js/home.js"></script>          
+<script src="/js/productDetail.js"></script>

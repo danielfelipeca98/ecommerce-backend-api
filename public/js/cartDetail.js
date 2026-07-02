@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const li = boton.closest('li');
         const cantidadSpan = li.querySelector('.cantidad');
         const subtotalSpan = li.querySelector('.subtotal');
-        
-        // Obtener el precio desde data-precio o desde el texto
+
         const precio = parseFloat(subtotalSpan?.dataset.precio);
         if (isNaN(precio)) {
             console.warn('Precio no válido, se usará 0');
@@ -27,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (nuevaCantidad < 0) return;
 
-        // Si llega a 0, eliminar el producto
         if (nuevaCantidad === 0) {
             const confirmar = confirm('¿Eliminar este producto del carrito?');
             if (!confirmar) return;
@@ -53,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Si la cantidad es mayor a 0, actualizar
         const nuevoSubtotal = precio * nuevaCantidad;
 
         try {
@@ -120,13 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (respuesta.ok) {
-                    alert('Carrito vaciado correctamente');
+                    mostrarMensaje('Carrito vaciado correctamente', 'exito');
+                    location.reload();
                     const lista = document.querySelector('ul');
                     if (lista) lista.innerHTML = '';
                     actualizarTotal(); // total a 0
                 } else {
                     const error = await respuesta.json();
-                    alert(`Error: ${error.error || 'No se pudo vaciar'}`);
+                    mostrarMensaje(`Error: ${error.error || 'No se pudo actualizar'}`, 'error');
                 }
             } catch (error) {
                 alert('Error de conexión');
