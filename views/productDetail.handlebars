@@ -1,13 +1,16 @@
-<h1>{{title}}</h1>
-<h3>{{description}}</h3>
-<p><strong>${{price}}</strong></p>
-<div>
-    <button id="btnDec">-</button>
-    <span id="cantidadDisplay">1</span>
-    <button id="btnInc">+</button>
-</div>
+<div class="product-detail">
+    <h1 class="product-title">{{title}}</h1>
+    <h3 class="product-description">{{description}}</h3>
+    <p class="product-price"><strong>${{price}}</strong></p>
+    
+    <div class="quantity-controls">
+        <button id="btnDec">-</button>
+        <span id="cantidadDisplay">1</span>
+        <button id="btnInc">+</button>
+    </div>
 
-<button id="btnAddProduct" data-id={{_id}}>Agregar al carrito</button>
+    <button id="btnAddProduct" data-id="{{_id}}" class="btn-add-cart">Agregar al carrito</button>
+</div>
 
 <script src="/js/productDetail.js"></script>
 <script src="/socket.io/socket.io.js"></script>

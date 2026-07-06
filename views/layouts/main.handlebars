@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-    <script src="socket.io/socket.io.js"></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="socket.io/socket.io.js"></script>
     <title>{{title}}</title>
 </head>
+
 <body>
     <header>
         <h1>Mi tienda</h1>
-        <a href="/">Inicio</a>
-        <a href="/realtimeproducts">Productos</a>
-        <a href="#" id="verCarrito">Ver Carrito</a>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/realtimeproducts">Productos</a>
+            <a href="#" id="verCarrito"><i class="fas fa-shopping-cart"></i></a>
+        </nav>
     </header>
     <main>
         <div id="mensajes-flotantes"></div>
         {{{body}}}
-        </main>
+    </main>
     <footer>
-        REcuerda la infirmacion de relleno
+        <p>&copy; 2026 - Mi Tienda. Todos los derechos reservados.</p>
+        <p style="font-size: 0.8rem; margin-top: 4px; color: var(--color-text-light);">
+            Desarrollado por <strong>Daniel Castro</strong>
+        </p>
     </footer>
 </body>
+
 </html>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/mensajes.js"></script>      
-<script src="/js/mainHandlebars.js"></script> 
-<script src="/js/home.js"></script>          
+<script src="/js/mensajes.js"></script>
+<script src="/js/mainHandlebars.js"></script>
+<script src="/js/home.js"></script>
 <script src="/js/productDetail.js"></script>

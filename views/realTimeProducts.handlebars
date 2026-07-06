@@ -15,7 +15,7 @@
 <h3>Eliminar por ID (manual)</h3>
 <form id="deleteForm">
     <input type="text" id="deleteId" placeholder="ID del producto a eliminar" required>
-    <button type="submit">Eliminar</button>
+    <button type="submit"><i class="fa-solid fa-trash"></i></button>
 </form>
 
 <hr>
@@ -28,9 +28,7 @@
             <span style="font-size:0.8em; color:gray;">ID: {{this._id}}</span><br>
             <strong>{{this.title}}</strong> - ${{this.price}}
             ({{this.category}}) - Stock: {{this.stock}} - Código: {{this.code}}
-            <button onclick="deleteProduct('{{this._id}}')" style="margin-left:10px; background-color:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">
-                Eliminar
-            </button>
+            <button onclick="deleteProduct('{{this._id}}')" style="margin-left:10px; background-color:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
         </li>
         {{else}}
         <li>No hay productos disponibles.</li>

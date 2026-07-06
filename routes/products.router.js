@@ -1,5 +1,7 @@
 import express from 'express'
 import ProductManager from '../managers/ProductManager.js'
+import auth from '../middlewares/auth.middleware.js';
+import { esAdmin } from '../middlewares/auth.middleware.js'
 
 const router = express.Router();
 const productManager = new ProductManager();
@@ -44,7 +46,7 @@ router.get('/:pid', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/',auth,esAdmin, async (req, res) => {
     try {
         const product = await productManager.addProduct(req.body);
         res.status(201).json(product);
@@ -53,7 +55,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:pid', async (req, res) => {
+router.put('/:pid',auth,esAdmin, async (req, res) => {
     try {
         const product = await productManager.updateProduct(req.params.pid, req.body);
         res.json(product);
@@ -62,7 +64,7 @@ router.put('/:pid', async (req, res) => {
     }
 });
 
-router.delete('/:pid', async (req, res) => {
+router.delete('/:pid',auth,esAdmin, async (req, res) => {
     try {
         await productManager.deleteProduct(req.params.pid);
         res.status(204).send();

@@ -1,3 +1,415 @@
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --color-primary:#2563eb;
+     --color-primary-hover: #1d4ed8;  
+    --color-background: #f8f9fa;     
+    --color-card: #ffffff;           
+    --color-text: #1f2937;           
+    --color-text-light: #6b7280;     
+    --color-border: #e5e7eb;       
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --radius: 12px;
+}
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: 20px;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-card);
+    padding: 16px 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--color-primary);
+}
+head h1{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+header nav {
+    display: flex;
+    gap: 6px; 
+    align-items: center;
+}
+
+header a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+header a:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+header a#verCarrito {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+header a#verCarrito:hover {
+    background-color: var(--color-primary-hover);
+    transform: scale(1.03);
+}
+
+header a#verCarrito[href="/"] {
+    background-color: var(--color-border);
+    color: var(--color-text-light);
+    cursor: default;
+}
+
+header a#verCarrito[href="/"]:hover {
+    background-color: var(--color-border);
+    transform: none;
+}
+
+ul{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap: 24px;
+      list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+ul li:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+ul li strong {
+    font-size: 1.1rem;
+    color: var(--color-text);
+}
+
+ul li strong + span {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 1.2rem;
+}
+
+ul li a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    transition: color 0.2s;
+}
+
+ul li a:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+ul li .btn-dec,
+ul li .btn-inc,
+ul li .btn-add-cart{
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+ul li .btn-dec,
+ul li .btn-inc {
+    background-color: var(--color-border);
+    color: var(--color-text);
+    font-size: 1rem;
+    padding: 4px 12px;
+}
+
+ul li .btn-dec:hover,
+ul li .btn-inc:hover  {
+    background-color: #d1d5db;
+}
+
+ul li .btn-add-cart {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+ul li .btn-add-cart:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.product-actions .btn-dec,
+.product-actions .btn-inc,
+.product-actions .cantidad {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-actions .btn-add-cart {
+    margin-left: auto; 
+}
+
+ul li .cantidad   {
+    font-weight: 600;
+    min-width: 24px;
+    text-align: center;
+    display: inline-block;
+}
+
+.product-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: var(--color-card);
+    padding: 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+}
+
+.product-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.product-description {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--color-text-light);
+    margin-bottom: 16px;
+}
+
+.product-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+}
+
+.product-price strong {
+    color: var(--color-primary);
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.quantity-controls button {
+    padding: 8px 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-border);
+    color: var(--color-text);
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quantity-controls button:hover {
+    background-color: #d1d5db;
+}
+
+.quantity-controls span {
+    font-size: 1.6rem;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+}
+
+.btn-add-cart {
+    padding: 14px 40px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 8px;
+}
+
+.btn-add-cart:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* 
+   Carrito de compras
+*/
+
+h1:first-child {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-text);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    transition: box-shadow 0.2s;
+}
+
+ul li:hover {
+    box-shadow: var(--shadow-md);
+}
+
+ul li h1 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    flex: 1 1 100%;
+    color: var(--color-text);
+}
+
+ul li h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin: 0;
+    color: var(--color-text-light);
+    flex: 1 1 auto;
+}
+
+ul li .cantidad {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+ul li .subtotal {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+ul li .btn-more,
+ul li .btn-less {
+    padding: 4px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+ul li .btn-more {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+ul li .btn-more:hover {
+    background-color: var(--color-primary-hover);
+}
+
+ul li .btn-less {
+    background-color: var(--color-border);
+    color: var(--color-text);
+}
+
+ul li .btn-less:hover {
+    background-color: #d1d5db;
+}
+
+/* Total del carrito (el h3 que dice "Total: $X") */
+h3:last-of-type {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 16px;
+    color: var(--color-text);
+}
+
+#total-carrito {
+    color: var(--color-primary);
+}
+
+/* Botón "Vaciar carrito" */
+#btnPay {
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    background-color: #dc3545;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#btnPay:hover {
+    background-color: #b02a37;
+}
+
+p {
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+    text-align: center;
+    padding: 40px 0;
+}
+
+
+/*    Mensajes flotantes (toasts) */
+
 #mensajes-flotantes {
     position: fixed;
     top: 20px;
@@ -6,52 +418,535 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 350px;
+    max-width: 380px;
     width: 100%;
     pointer-events: none;
 }
 
 .mensaje-flotante {
-    padding: 12px 20px;
-    border-radius: 8px;
-    color: white;
-    font-size: 14px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
     font-weight: 500;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     pointer-events: auto;
-    word-wrap: break-word;
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    backdrop-filter: blur(4px);
 }
 
 .mensaje-flotante.mostrar {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
 }
 
 .mensaje-flotante.ocultar {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(40px) scale(0.95);
 }
 
 .mensaje-exito {
-    background-color: #28a745;
-    border-left: 5px solid #1e7e34;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-left: 5px solid #047857;
 }
 
 .mensaje-error {
-    background-color: #dc3545;
-    border-left: 5px solid #a71d2a;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-left: 5px solid #b91c1c;
 }
 
 .mensaje-info {
-    background-color: #17a2b8;
-    border-left: 5px solid #117a8b;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-left: 5px solid #1d4ed8;
 }
 
 .mensaje-advertencia {
-    background-color: #ffc107;
-    color: #212529;
-    border-left: 5px solid #d39e00;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-left: 5px solid #b45309;
+    color: #1f2937;
+}
+
+/* ---------------------------------------------
+   Paginación (enlaces "Anterior" y "Siguiente")
+   --------------------------------------------- */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: var(--color-card);
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.pagination a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.pagination span {
+    font-weight: 500;
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+}
+
+/* ---------------------------------------------
+   Formularios (realTimeProducts)
+   --------------------------------------------- */
+
+#productForm,
+#deleteForm {
+    background-color: var(--color-card);
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    align-items: center;
+}
+
+#productForm input,
+#deleteForm input {
+    padding: 10px 14px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    flex: 1 1 160px;
+    min-width: 120px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fafbfc;
+}
+
+#productForm input:focus,
+#deleteForm input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    background-color: white;
+}
+
+#productForm button,
+#deleteForm button {
+    padding: 10px 28px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    flex: 0 0 auto;
+}
+
+#productForm button:hover,
+#deleteForm button:hover {
+    background-color: var(--color-primary-hover);
+    transform: scale(1.02);
+}
+
+#deleteForm button {
+    background-color: #dc3545;
+}
+
+#deleteForm button:hover {
+    background-color: #b02a37;
+}
+
+/* Botón "Eliminar" en realTimeProducts (si existe) */
+ul li button[onclick*="deleteProduct"] {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+}
+
+ul li button[onclick*="deleteProduct"]:hover {
+    background-color: #b02a37;
+}
+
+/* ---------------------------------------------
+   Ajuste para el contenedor de paginación en home
+   --------------------------------------------- */
+
+/* Si tienes un div con la paginación, puedes darle esta clase */
+.pagination-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination-wrapper a {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: var(--color-card);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination-wrapper a:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* ============================================
+   BLOQUE 8: Footer y ajustes de espaciado
+   ============================================ */
+
+/* ---------------------------------------------
+   Footer
+   --------------------------------------------- */
+
+footer {
+    margin-top: 60px;
+    padding: 24px 32px;
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    border-top: 2px solid var(--color-border);
+}
+
+footer p {
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------------------------------------------
+   Ajuste de espaciado general
+   --------------------------------------------- */
+
+/* Separación entre secciones */
+main > * {
+    margin-bottom: 24px;
+}
+
+/* Último elemento sin margen inferior */
+main > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------------------------------------------
+   Enlace "Ver carrito" en el header (estilo especial)
+   --------------------------------------------- */
+
+/* Si quieres que "Ver carrito" se vea diferente */
+header a#verCarrito {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+header a#verCarrito:hover {
+    background-color: var(--color-primary-hover);
+    transform: scale(1.03);
+}
+
+/* Si el carrito está vacío, se ve gris */
+header a#verCarrito[href="/"] {
+    background-color: var(--color-border);
+    color: var(--color-text-light);
+    cursor: default;
+}
+
+header a#verCarrito[href="/"]:hover {
+    background-color: var(--color-border);
+    transform: none;
+}
+
+/* ============================================
+   BLOQUE 9: realTimeProducts y paginación mejorada
+   ============================================ */
+
+/* ---------------------------------------------
+   Layout de la página realTimeProducts
+   --------------------------------------------- */
+
+/* Contenedor de formularios (agruparlos en una fila) */
+#productForm,
+#deleteForm {
+    background-color: var(--color-card);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+#productForm input,
+#deleteForm input {
+    padding: 8px 12px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    flex: 1 1 140px;
+    min-width: 100px;
+}
+
+#productForm input:focus,
+#deleteForm input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+#productForm button,
+#deleteForm button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#productForm button:hover {
+    background-color: var(--color-primary-hover);
+}
+
+#deleteForm button {
+    background-color: #dc3545;
+}
+
+#deleteForm button:hover {
+    background-color: #b02a37;
+}
+
+/* Lista de productos en realTimeProducts (usa el mismo grid que home) */
+#product-List {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#product-List li {
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#product-List li:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+}
+
+/* Botón eliminar en cada producto (si existe) */
+#product-List li button[onclick*="deleteProduct"] {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.2s;
+    align-self: flex-start;
+}
+
+#product-List li button[onclick*="deleteProduct"]:hover {
+    background-color: #b02a37;
+}
+
+/* ---------------------------------------------
+   Paginación con números de página (mejora)
+   --------------------------------------------- */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination a {
+    background-color: var(--color-card);
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-border);
+}
+
+.pagination a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.pagination span {
+    background-color: var(--color-primary);
+    color: white;
+    border: 1.5px solid var(--color-primary);
+}
+
+/* Enlaces "Anterior" y "Siguiente" más destacados */
+.pagination .prev,
+.pagination .next {
+    font-weight: 600;
+    padding: 8px 20px;
+}
+
+/* ---------------------------------------------
+   Responsividad básica
+   --------------------------------------------- */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    header a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+
+    .product-detail {
+        padding: 20px;
+        flex-direction: column;
+    }
+
+    .product-detail .product-image {
+        min-height: 180px;
+    }
+
+    #product-List,
+    ul {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #productForm,
+    #deleteForm {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #productForm input,
+    #deleteForm input {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    #productForm button,
+    #deleteForm button {
+        width: 100%;
+    }
+
+    .pagination {
+        gap: 6px;
+    }
+
+    .pagination a,
+    .pagination span {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Teléfonos */
+@media (max-width: 480px) {
+    body {
+        padding: 12px;
+    }
+
+    header {
+        padding: 12px;
+    }
+
+    header h1 {
+        font-size: 1.1rem;
+    }
+
+    #product-List,
+    ul {
+        grid-template-columns: 1fr;
+    }
+
+    .product-detail {
+        padding: 16px;
+    }
+
+    .product-detail .product-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .product-detail .product-info .price {
+        font-size: 1.4rem;
+    }
+
+    ul li {
+        padding: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    ul li h3 {
+        font-size: 0.9rem;
+    }
+
+    #btnPay {
+        width: 100%;
+        text-align: center;
+    }
 }

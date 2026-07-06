@@ -10,6 +10,8 @@ import productsRouter from './routes/products.router.js'
 import cartsRouter from './routes/carts.router.js'
 import viewsRouter from './routes/views.router.js'
 import ProductManager from './managers/ProductManager.js'
+import authRouter from './routes/auth.router.js' 
+
 
 dotenv.config()
 
@@ -34,6 +36,7 @@ app.use(express.static('public'));
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 app.use('/', viewsRouter);
+app.use('/api/auth', authRouter);
 
 
 const server = http.createServer(app);
