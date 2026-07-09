@@ -1,8 +1,11 @@
 <div class="product-detail">
     <h1 class="product-title">{{title}}</h1>
-    <h3 class="product-description">{{description}}</h3>
+    <h3 class="product-description"><strong>Descripcion:</strong>{{description}}</h3>
+    <img src="/img/defaultProduct.PNG" alt="{{this.title}}">
     <p class="product-price"><strong>${{price}}</strong></p>
-    
+
+
+
     <div class="quantity-controls">
         <button id="btnDec">-</button>
         <span id="cantidadDisplay">1</span>
@@ -12,5 +15,5 @@
     <button id="btnAddProduct" data-id="{{_id}}" class="btn-add-cart">Agregar al carrito</button>
 </div>
 
-<script src="/js/productDetail.js"></script>
+<script type="module" src="/js/productDetail.js"></script>
 <script src="/socket.io/socket.io.js"></script>

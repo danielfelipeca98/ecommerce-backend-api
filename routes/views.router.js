@@ -1,6 +1,7 @@
 import express from 'express'
 import ProductManager from '../managers/ProductManager.js';
 import CartManager from '../managers/CartManager.js'
+import auth, {esAdmin} from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 const productManager = new ProductManager();
@@ -30,12 +31,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/realtimeproducts', async (req, res) => {
+router.get('/realtimeproducts', auth, esAdmin, async (req, res) => {
     try {
         const limit = parseInt(req.query.limit) || 50; 
         const result = await productManager.getProducts(limit);
         const products = result.payload || [];
-        res.render('realTimeProducts', { products });
+        res.render('realTimeProducts', { products,user: req.user  });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al cargar productos');
@@ -51,9 +52,10 @@ router.get('/products/:pid', async (req, res) => {
     }
 })
 
-router.get('/carts/:cid', async (req, res) => {
+router.get('/carts/:cid', auth,async (req, res) => {
     try {
-        const cart = await cartManager.getCartById(req.params.cid);
+        const cart = await cartManager.getCartById(req.params.cid, req.user.id);
+        
         console.log('Carrito después de populate:', cart.products.map(p => p.product ? p.product.title : 'null'));
         let total = 0;
         cart.products.forEach(item => {
@@ -63,8 +65,34 @@ router.get('/carts/:cid', async (req, res) => {
         res.render('cartDetail', { cart, total })
     } catch (error) {
         console.error('Mensaje:', error.message);
-        res.status(404).send('Carrito no encontrado');
+        if (error.message.includes('permiso')) {
+            res.status(403).send('No tienes permiso para ver este carrito');
+        } else {
+            res.status(404).send('Carrito no encontrado');
+        }
     }
 })
+
+router.get('/login', async (req,res)=>{
+    try{
+        res.render('login',{
+            title: 'Iniciar sesion'
+        });
+        
+    }catch(error){
+        console.error('Error al renderizar login:', error);
+        res.status(500).send('Error al cargar la página de login');
+    }
+})
+router.get('/register', (req, res) => {
+    res.render('register', { title: 'Registro de usuario' });
+});
+
+
+
+
+router.get('/test', (req, res) => {
+    res.render('test');
+});
 
 export default router;

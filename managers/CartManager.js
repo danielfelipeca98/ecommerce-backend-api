@@ -1,10 +1,10 @@
 import Cart from "../models/cart.model.js";
 import Product from "../models/products.model.js";
 
-
 class CartManager {
     async createCart(userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const newCart = await Cart.create({ products: [], user: userId });
             return newCart;
         } catch (error) {
@@ -14,32 +14,34 @@ class CartManager {
 
     async getCartById(id, userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const cart = await Cart.findById(id).populate('products.product');
             if (!cart) {
                 throw new Error(`Carrito con ID ${id} no encontrado`);
             }
-            if (cart.user.toString() === userId) {
-            } else {
-                throw new Error('No tienes permiso para ver este carrito')
+            if (cart.user.toString() !== userId.toString()) {
+                throw new Error('No tienes permiso para ver este carrito');
             }
             cart.products = cart.products.filter(item => item.product !== null);
-            return cart
+            return cart;
         } catch (error) {
             if (error.message.includes('no encontrado') || error.message.includes('permiso')) {
                 throw error;
             }
+            throw new Error(`Error al obtener carrito: ${error.message}`);
         }
     }
 
     async addProductToCart(cid, pid, quantity = 1, userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const existingProduct = await Product.findById(pid);
             if (!existingProduct) {
-                throw new Error(`Producto con ID ${pid} no encontrado`)
+                throw new Error(`Producto con ID ${pid} no encontrado`);
             }
             const cart = await Cart.findById(cid);
             if (!cart) {
-                throw new Error(`Carrito con ID ${cid} no encontrado`)
+                throw new Error(`Carrito con ID ${cid} no encontrado`);
             }
             if (cart.user.toString() !== userId.toString()) {
                 throw new Error('No tienes permiso para modificar este carrito');
@@ -47,36 +49,35 @@ class CartManager {
             const oneProduct = cart.products.find(p => p.product.toString() === pid);
             if (oneProduct) {
                 oneProduct.quantity += quantity;
+            } else {
+                cart.products.push({ product: pid, quantity: quantity });
             }
-            else { cart.products.push({ product: pid, quantity: quantity }) }
             await cart.save();
             await cart.populate('products.product');
             return cart;
-        }
-        catch (error) {
-            throw new Error(`Error al buscar el producto: ${error.message}`);
+        } catch (error) {
+            throw new Error(`Error al agregar producto: ${error.message}`);
         }
     }
 
     async deleteProductFromCart(cid, pid, userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const cart = await Cart.findById(cid);
             if (!cart) {
-                throw new Error(`No se encontro Carrito ${cid}`)
+                throw new Error(`No se encontró Carrito ${cid}`);
             }
             if (cart.user.toString() !== userId.toString()) {
                 throw new Error('No tienes permiso para modificar este carrito');
             }
-            const oneProduct = cart.products.find(p => p.product.toString() === pid)
-            if (oneProduct) {
-                cart.products = cart.products.filter(p => p.product.toString() !== pid)
-                await cart.save();
-                await cart.populate('products.product')
-                return cart;
+            const oneProduct = cart.products.find(p => p.product.toString() === pid);
+            if (!oneProduct) {
+                throw new Error(`Producto ${pid} no encontrado en el carrito`);
             }
-            else {
-                throw new Error(`Producto ${pid} no encontrado`);
-            }
+            cart.products = cart.products.filter(p => p.product.toString() !== pid);
+            await cart.save();
+            await cart.populate('products.product');
+            return cart;
         } catch (error) {
             if (error.message.includes('no encontrado') || error.message.includes('permiso')) {
                 throw error;
@@ -85,59 +86,62 @@ class CartManager {
         }
     }
 
-    async clearCart(cid,userId) {
+    async clearCart(cid, userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const cart = await Cart.findById(cid);
             if (!cart) {
-                throw new Error(`No se encontro Carrito ${cid}`)
+                throw new Error(`No se encontró Carrito ${cid}`);
             }
             if (cart.user.toString() !== userId.toString()) {
                 throw new Error('No tienes permiso para modificar este carrito');
             }
             cart.products = [];
-            await cart.save()
-            await cart.populate('products.product')
-            return cart;
-        } catch (error) {
-            if (error.message.includes('no encontrado')) {
-                throw new Error;
-            }
-            throw new Error(`Carrito no se pudo limpiar, ${error.message}`)
-        }
-    }
-
-    async updateProduct(cid, pid, quantity,userId) {
-        try {
-            const cart = await Cart.findById(cid);
-            if (!cart) {
-                throw new Error(`No se encontro Carrito ${cid}`)
-            }
-            if (cart.user.toString() !== userId.toString()) {
-                throw new Error('No tienes permiso para modificar este carrito');
-            }
-            const oneProduct = cart.products.find(p => p.product.toString() === pid)
-            if (!oneProduct) {
-                throw new Error(`Producto ${pid} no encontrado en el carrito`)
-            } else {
-                if (quantity > 0) {
-                    oneProduct.quantity = quantity
-                } else {
-                    return await this.deleteProductFromCart(cid, pid)
-                }
-            }
             await cart.save();
-            await cart.populate('products.product')
+            await cart.populate('products.product');
             return cart;
         } catch (error) {
             if (error.message.includes('no encontrado')) {
                 throw error;
             }
-            throw new Error(`Carrito no se pudo limpiar, ${error.message}`)
+            throw new Error(`Error al vaciar carrito: ${error.message}`);
         }
     }
 
-    async updateCart(cid, productsArray,userId) {
+    async updateProduct(cid, pid, quantity, userId) {
         try {
+            if (!userId) throw new Error('Usuario no autenticado');
+            const cart = await Cart.findById(cid);
+            if (!cart) {
+                throw new Error(`No se encontró Carrito ${cid}`);
+            }
+            if (cart.user.toString() !== userId.toString()) {
+                throw new Error('No tienes permiso para modificar este carrito');
+            }
+            const oneProduct = cart.products.find(p => p.product.toString() === pid);
+            if (!oneProduct) {
+                throw new Error(`Producto ${pid} no encontrado en el carrito`);
+            }
+            if (quantity > 0) {
+                oneProduct.quantity = quantity;
+                await cart.save();
+                await cart.populate('products.product');
+                return cart;
+            } else {
+                // Si quantity <= 0, eliminar el producto
+                return await this.deleteProductFromCart(cid, pid, userId);
+            }
+        } catch (error) {
+            if (error.message.includes('no encontrado') || error.message.includes('permiso')) {
+                throw error;
+            }
+            throw new Error(`Error al actualizar producto: ${error.message}`);
+        }
+    }
+
+    async updateCart(cid, productsArray, userId) {
+        try {
+            if (!userId) throw new Error('Usuario no autenticado');
             const cart = await Cart.findById(cid);
             if (!cart) {
                 throw new Error(`Carrito con ID ${cid} no encontrado`);
@@ -171,6 +175,6 @@ class CartManager {
             throw new Error(`Error al actualizar el carrito: ${error.message}`);
         }
     }
-
 }
+
 export default CartManager;

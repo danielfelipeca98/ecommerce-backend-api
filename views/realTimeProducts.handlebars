@@ -7,6 +7,7 @@
     <input type="number" id="price" placeholder="Precio" required>
     <input type="number" id="stock" placeholder="Stock disponible" required>
     <input type="text" id="category" placeholder="Categoria" required>
+    <input type="text" id="thumbnails" placeholder="URL de imagen (opcional)">
     <button type="submit">Agregar Producto</button>
 </form>
 
@@ -28,7 +29,11 @@
             <span style="font-size:0.8em; color:gray;">ID: {{this._id}}</span><br>
             <strong>{{this.title}}</strong> - ${{this.price}}
             ({{this.category}}) - Stock: {{this.stock}} - Código: {{this.code}}
-            <button onclick="deleteProduct('{{this._id}}')" style="margin-left:10px; background-color:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+            <img src="/img/defaultProduct.PNG" alt="{{this.title}}">
+
+            <button onclick="deleteProduct('{{this._id}}')"
+                style="margin-left:10px; background-color:#dc3545; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;"><i
+                    class="fa-solid fa-trash"></i></button>
         </li>
         {{else}}
         <li>No hay productos disponibles.</li>
@@ -39,3 +44,8 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/realTime.js"></script>
 <script src="/js/mensajes.js"></script>
+<script>
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/login';
+    }
+</script>

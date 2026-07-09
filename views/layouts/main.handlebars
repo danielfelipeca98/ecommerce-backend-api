@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <title>{{title}}</title>
 </head>
 
@@ -15,8 +15,9 @@
         <h1>Mi tienda</h1>
         <nav>
             <a href="/">Inicio</a>
-            <a href="/realtimeproducts">Productos</a>
+            <a href="/realtimeproducts" id="linkProductos">Productos</a>
             <a href="#" id="verCarrito"><i class="fas fa-shopping-cart"></i></a>
+            <a href="#" id="btnLogout">Cerrar sesion</a>
         </nav>
     </header>
     <main>
@@ -36,5 +37,4 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/mensajes.js"></script>
 <script src="/js/mainHandlebars.js"></script>
-<script src="/js/home.js"></script>
-<script src="/js/productDetail.js"></script>
+<script src="/js/logout.js"></script>

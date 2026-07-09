@@ -1,3 +1,4 @@
+import { fetchWithAuth } from "./fetchWithAuth.js";
 document.addEventListener('DOMContentLoaded', () => {
 
     const botonesMore = document.querySelectorAll('.btn-more');

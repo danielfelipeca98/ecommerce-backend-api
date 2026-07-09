@@ -1,18 +1,28 @@
 <h1><strong>Carrito de compras</strong></h1>
 
 {{#if cart.products.length}}
-    <ul>
+    <ul class="cart-list">
         {{#each cart.products}}
             {{#if this.product}}
-                <li>
-                    <h1><strong>{{this.product.title}}</strong></h1>
-                    <h3>
-                        ${{this.product.price}} × 
-                        <span class="cantidad" data-pid="{{this.product._id}}">{{this.quantity}}</span> UND = 
-                        <span class="subtotal" data-pid="{{this.product._id}}" data-precio="{{this.product.price}}">{{this.subtotal}}</span>
-                    </h3>
-                    <button class="btn-more" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">+</button>
-                    <button class="btn-less" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">-</button>
+                <li class="cart-item-flex">  
+                    
+                    <div class="cart-img">
+                            <img src="/img/defaultProduct.PNG" alt="{{this.title}}">
+
+                    </div>
+                  
+                    <div class="cart-info">
+                        <h1><strong>{{this.product.title}}</strong></h1>
+                        <h3>
+                            ${{this.product.price}} × 
+                            <span class="cantidad" data-pid="{{this.product._id}}">{{this.quantity}}</span> UND = 
+                            <span class="subtotal" data-pid="{{this.product._id}}" data-precio="{{this.product.price}}">{{this.subtotal}}</span>
+                        </h3>
+                        <div class="cart-buttons-wrapper">
+                            <button class="btn-more" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">+</button>
+                            <button class="btn-less" data-pid="{{this.product._id}}" data-cid="{{../cart._id}}">-</button>
+                        </div>
+                    </div>
                 </li>
             {{else}}
                 <li>Producto eliminado (referencia huérfana)</li>
@@ -26,4 +36,9 @@
 {{/if}}
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="/js/cartDetail.js"></script>
+<script type="module" src="/js/cartDetail.js"></script>
+<script>
+    if (!localStorage.getItem('token')) {
+        window.location.href = '/login';
+    }
+</script>

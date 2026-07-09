@@ -75,6 +75,12 @@ class ProductManager {
     }
 
     async addProduct(productData) {
+        if(!productData.thumbnails || productData.thumbnails.length===0){
+            productData.thumbnails = ['/public/img/defaultProduct.PNG']
+        }
+        if (!productData.description || productData.description.trim() === '') {
+        productData.description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        }
         try {
             const newProduct = await Product.create(productData);
             console.log('✅ Producto creado en DB:', newProduct);

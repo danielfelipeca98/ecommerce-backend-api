@@ -65,6 +65,7 @@ router.delete('/:cid/products/:pid', auth, async (req, res) => {
 
 router.put('/:cid/products/:pid', auth, async (req, res) => {
     try {
+        console.log('userId desde req.user.id:', req.user.id);
         const { quantity } = req.body;
         const cart = await cartManager.updateProduct(req.params.cid, req.params.pid, quantity, req.user.id);
         res.json(cart)

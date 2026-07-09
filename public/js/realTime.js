@@ -1,5 +1,8 @@
 
-const socket = io();
+const socket = io({
+    auth: {
+        token: localStorage.getItem('token')}
+    });
 
 
 window.deleteProduct = function (id) {

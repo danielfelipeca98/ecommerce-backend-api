@@ -5,6 +5,7 @@
         <li>
             <strong>{{this.title}}</strong> - ${{this.price}}
             ({{this.category}}) Stock: {{this.stock}} Código: {{this.code}}
+            <img src="/img/defaultProduct.PNG" alt="{{this.title}}">
             <a href="/products/{{this._id}}">Ver detalle</a>
             <div class="product-actions">
                 <button class="btn-inc" data-pid="{{this._id}}">+</button>
@@ -33,3 +34,5 @@
     </div>
 
 </div>
+
+<script type="module" src="/js/home.js"></script>

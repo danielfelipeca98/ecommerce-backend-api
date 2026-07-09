@@ -1,10 +1,12 @@
+import { fetchWithAuth } from "./fetchWithAuth.js";
+
 async function obtenerOCrearCarrito() {
 
     let cid = localStorage.getItem('carritoId');
 
     if (cid) {
         try {
-            const respuesta = await fetch(`/api/carts/${cid}`);
+            const respuesta = await fetchWithAuth(`/api/carts/${cid}`);
             if (respuesta.ok) {
                 return cid;
             } else {
@@ -16,7 +18,7 @@ async function obtenerOCrearCarrito() {
     }
 
     try {
-        const respuesta = await fetch('/api/carts', {
+        const respuesta = await fetchWithAuth('/api/carts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -85,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const cid = await obtenerOCrearCarrito();
 
 
-            const respuesta = await fetch(`/api/carts/${cid}/product/${pid}`, {
+            const respuesta = await fetchWithAuth(`/api/carts/${cid}/product/${pid}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ quantity: cantidad })
