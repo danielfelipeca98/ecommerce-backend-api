@@ -51,58 +51,59 @@ API RESTful para un sistema de e-commerce con gestión de productos, carritos de
 
 ---
 
-## Estructura del proyecto
+## 📂 Estructura del Proyecto
 
+```
 ecommerce-backend-api/
 ├── config/
-│ └── database.js # Conexión a MongoDB
-├── managers/ # Lógica de negocio
-│ ├── CartManager.js
-│ └── ProductManager.js
-├── middlewares/ # Middlewares de Express
-│ ├── auth.middleware.js # Autenticación JWT
-│ └── authView.middleware.js
-├── models/ # Modelos de MongoDB
-│ ├── cart.model.js
-│ ├── products.model.js
-│ └── user.model.js
-├── public/ # Archivos estáticos
-│ ├── css/
-│ │ └── styles.css
-│ ├── js/ # JavaScript del frontend
-│ │ ├── cartDetail.js
-│ │ ├── fetchWithAuth.js
-│ │ ├── home.js
-│ │ ├── login.js
-│ │ ├── logout.js
-│ │ ├── mainHandlebars.js
-│ │ ├── mensajes.js
-│ │ ├── productDetail.js
-│ │ ├── realTime.js
-│ │ └── register.js
-│ └── img/ # Imágenes de productos
-│ └── default-product.png
-├── routes/ # Rutas de la API
-│ ├── auth.router.js
-│ ├── carts.router.js
-│ ├── products.router.js
-│ └── views.router.js
-├── views/ # Plantillas Handlebars
-│ ├── layouts/
-│ │ └── main.handlebars # Layout principal
-│ ├── cartDetail.handlebars
-│ ├── home.handlebars
-│ ├── login.handlebars
-│ ├── productDetail.handlebars
-│ ├── realTimeProducts.handlebars
-│ └── register.handlebars
-├── .env # Variables de entorno (no subir a GitHub)
+│   └── database.js                   # Conexión a MongoDB
+├── managers/                         # Lógica de negocio
+│   ├── CartManager.js
+│   └── ProductManager.js
+├── middlewares/                      # Middlewares de Express
+│   ├── auth.middleware.js            # Autenticación JWT
+│   └── authView.middleware.js
+├── models/                           # Modelos de MongoDB
+│   ├── cart.model.js
+│   ├── products.model.js
+│   └── user.model.js
+├── public/                           # Archivos estáticos
+│   ├── css/
+│   │   └── styles.css
+│   ├── js/
+│   │   ├── cartDetail.js
+│   │   ├── fetchWithAuth.js
+│   │   ├── home.js
+│   │   ├── login.js
+│   │   ├── logout.js
+│   │   ├── mainHandlebars.js
+│   │   ├── mensajes.js
+│   │   ├── productDetail.js
+│   │   ├── realTime.js
+│   │   └── register.js
+│   └── img/
+│       └── default-product.png
+├── routes/                           # Rutas de la API
+│   ├── auth.router.js
+│   ├── carts.router.js
+│   ├── products.router.js
+│   └── views.router.js
+├── views/                            # Plantillas Handlebars
+│   ├── layouts/
+│   │   └── main.handlebars
+│   ├── cartDetail.handlebars
+│   ├── home.handlebars
+│   ├── login.handlebars
+│   ├── productDetail.handlebars
+│   ├── realTimeProducts.handlebars
+│   └── register.handlebars
+├── .env                              # Variables de entorno
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
-├── server.js # Punto de entrada de la aplicación
-└── README.md # Documentación del proyecto
-
+├── server.js                         # Punto de entrada
+└── README.md                         # Documentación del proyecto
+```
 
 ---
 ## Notas sobre la estructura
